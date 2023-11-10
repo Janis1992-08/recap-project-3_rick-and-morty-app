@@ -13,11 +13,11 @@ const pagination = document.querySelector('[data-js="pagination"]');
 // States
 const maxPage = 42; // Max Page eintragen
 let page = 1; // const => let
-const searchQuery = "";
+let searchQuery = "";
 
 async function fetchCharacters() {
   const response = await fetch(
-    `https://rickandmortyapi.com/api/character?page=${page}`
+    `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`
   ); // ?page= noch einbauen `
   const data = await response.json(); // Hier holen wir uns die Daten aus der URL und speichern diese in data ab
   console.log(data);
@@ -26,25 +26,32 @@ async function fetchCharacters() {
     cardContainer.append(characterCard);
   });
 }
-
 fetchCharacters();
 
 // Next Button
-nextButton.addEventListener("click", async () => {
+nextButton.addEventListener("click", () => {
   if (page < maxPage) {
     // prüfen ob die aktuelle Seite kleiner ist, als die maximale Seite
     page++; // Wenn die aktuelle Seite kleiner ist, wird diese um eine Seite erhöht
     cardContainer.innerHTML = ""; // der aktuelle Inhalt wird geleert
-    await fetchCharacters(); // die Funktion um neue Charaktere aufzulisten, wird aufgerufen, wartet aber bis die Funktion ausgeführt ist (await)
+    fetchCharacters();
   }
 });
 
 // Previous Button
-prevButton.addEventListener("click", async () => {
+prevButton.addEventListener("click", () => {
   if (page > 1) {
     // prüfen ob die aktuelle Seite größer ist als 1
     page--; // Wenn die aktuelle Seite größer ist, wird diese um eine Seite verkleinert
     cardContainer.innerHTML = ""; // der aktuelle Inhalt wird geleert
-    await fetchCharacters(); // die Funktion um neue Charaktere aufzulisten, wird aufgerufen, wartet aber bis die Funktion ausgeführt ist (await)
+    fetchCharacters();
   }
+});
+
+//SearchBar
+searchBar.addEventListener("submit", (event) => {
+  event.preventDefault();
+  searchQuery = document.querySelector('[data-js="search-bar__input"]').value; // Value des Inputs
+  cardContainer.innerHTML = "";
+  fetchCharacters();
 });
