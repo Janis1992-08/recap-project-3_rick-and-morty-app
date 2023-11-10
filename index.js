@@ -1,5 +1,4 @@
-import {CharacterCard} from "./components/CharacterCard/CharacterCard.js"
-
+import { CharacterCard } from "./components/CharacterCard/CharacterCard.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -16,16 +15,16 @@ const maxPage = 1;
 const page = 1;
 const searchQuery = "";
 
-
 async function fetchCharacters() {
   const response = await fetch("https://rickandmortyapi.com/api/character");
-  const data = await response.json();
+  const data = await response.json(); // Hier holen wir uns die Daten aus der URL und speichern diese in data ab
   console.log(data);
-  /* const characterName = data.results[0].name; */
-  const character = data.results[2];
+  const character = data.results; // Die zwei weg, weil wir ja alle results haben wollen
+  data.results.forEach((character) => {
+    const characterCard = CharacterCard(character);
+    cardContainer.append(characterCard);
+  });
   console.log(character);
-  cardContainer.append(CharacterCard(character));
 }
 
 fetchCharacters();
-
