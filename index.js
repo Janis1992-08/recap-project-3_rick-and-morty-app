@@ -15,9 +15,10 @@ const maxPage = 42; // Max Page eintragen
 let page = 1; // const => let
 const searchQuery = "";
 
+
 async function fetchCharacters() {
   const response = await fetch(
-    `https://rickandmortyapi.com/api/character?page=${page}`
+    `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`
   ); // ?page= noch einbauen `
   const data = await response.json(); // Hier holen wir uns die Daten aus der URL und speichern diese in data ab
   console.log(data);
@@ -48,3 +49,9 @@ prevButton.addEventListener("click", async () => {
     await fetchCharacters(); // die Funktion um neue Charaktere aufzulisten, wird aufgerufen, wartet aber bis die Funktion ausgeführt ist (await)
   }
 });
+//SearchBar
+searchBar.addEventListener("submit",async (event) => {
+  event.preventDefault();
+  searchQuery = searchBar.value;
+  await fetchCharacters();
+})
