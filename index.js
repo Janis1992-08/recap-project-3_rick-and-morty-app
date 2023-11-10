@@ -35,6 +35,7 @@ nextButton.addEventListener("click", () => {
     page++; // Wenn die aktuelle Seite kleiner ist, wird diese um eine Seite erhöht
     cardContainer.innerHTML = ""; // der aktuelle Inhalt wird geleert
     fetchCharacters();
+    counter();
   }
 });
 
@@ -45,8 +46,15 @@ prevButton.addEventListener("click", () => {
     page--; // Wenn die aktuelle Seite größer ist, wird diese um eine Seite verkleinert
     cardContainer.innerHTML = ""; // der aktuelle Inhalt wird geleert
     fetchCharacters();
+    counter();
   }
 });
+
+// Counter
+function counter() {
+  pagination.textContent = `${page}/${maxPage}`;
+}
+counter();
 
 //SearchBar
 searchBar.addEventListener("submit", (event) => {
